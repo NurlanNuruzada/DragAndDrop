@@ -1,40 +1,36 @@
-const draggables = document.querySelectorAll('.item')
-const containers = document.querySelectorAll('.background')
+const columns = document.querySelectorAll(".background");
 
-draggables.forEach(draggable => {
-  draggable.addEventListener('dragstart', () => {
-    draggable.classList.add('dragging')
-  })
+document.addEventListener("dragstart", (e) => {
+  e.target.classList.add("dragging");
+});
 
-  draggable.addEventListener('dragend', () => {
-    draggable.classList.remove('dragging')
-  })
-})
+document.addEventListener("dragend", (e) => {
+  e.target.classList.remove("dragging");
+});
 
-containers.forEach(container => {
-  container.addEventListener('dragover', e => {
-    e.preventDefault()
-    const afterElement = getDragAfterElement(container, e.clientY)
-    const draggable = document.querySelector('.dragging')
-    if (afterElement == null) {
-      container.appendChild(draggable)
+columns.forEach((item) => {
+  item.addEventListener("dragover", (e) => {
+    const dragging = document.querySelector(".dragging");
+    const applyAfter = getNewPosition(item, e.clientY);
+
+    if (applyAfter) {
+      applyAfter.insertAdjacentElement("afterend", dragging);
     } else {
-      container.insertBefore(draggable, afterElement)
+      item.prepend(dragging);
     }
-  })
-})
+  });
+});
 
-function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+function getNewPosition(column, posY) {
+  const cards = column.querySelectorAll(".item:not(.dragging)");
+  let result;
 
-  return draggableElements.reduce((closest, child) => {
-    const box = child.getBoundingClientRect()
-    const offset = y - box.top - box.height / 2
-    if (offset < 0 && offset > closest.offset) {
-      return { offset: offset, element: child }
-    } else {
-      return closest
-    }
-  }, { offset: Number.NEGATIVE_INFINITY }).element
+  for (let refer_card of cards) {
+    const box = refer_card.getBoundingClientRect();
+    const boxCenterY = box.y + box.height / 2;
+
+    if (posY >= boxCenterY) result = refer_card;
+  }
+
+  return result;
 }
-

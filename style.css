@@ -1,0 +1,36 @@
+.container{
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.Drag__container{
+  text-align: center;
+  background-color: #333;
+  width: 300px;
+  height: max-content;
+  color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border: 1px solid #333;
+}
+.background{
+  background-color: bisque;
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 50px;
+}
+.item.dragging{
+  opacity: 0.2;
+}
+.item{
+  color: black;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: white;
+  width: 200px;
+  margin: 8px;
+  border: 1px solid black;
+  padding: 7px;
+}
